@@ -10,7 +10,6 @@ namespace cyx {
         else {
             std::ifstream shaderfile(filepath);
             std::string line;
-
             ShaderType interpret_source_as = ShaderType::NONE;
             // Stream to add our vertex
             std::stringstream vertex, fragment;
@@ -221,13 +220,11 @@ namespace cyx {
     }
 
     auto Shader::uniform_float4(const char* var, f32* values) -> void {
-        GLint location = glGetUniformLocation(_programID, var);
+		GLint location = glGetUniformLocation(_programID, var);
         assert(location != -1 && "BAD uniform Location");
         glUniform4f(location, values[0], values[1], values[2], values[4]);
     }
-    auto Shader::uniform_float4(const char* var, float* values) -> void
-    {
-    }
+
     auto Shader::uniform_float3(const char* var, f32* values) -> void {
         GLint location = glGetUniformLocation(_programID, var);
         assert(location != -1 && "BAD uniform Location");

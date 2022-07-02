@@ -1,7 +1,7 @@
 #pragma once
 
 #include "..\utils\common.h"
-#include <glad.h>
+#include <glad/glad.h>
 #include <array>
 #include <string>
 #include <sstream>
@@ -12,7 +12,6 @@
 
 namespace cyx {
 	enum class ShaderType {
-
 		NONE,
 		VERTEX, FRAGMENT, 
 		COUNT

@@ -6,7 +6,7 @@
 
 #include <SDL.h>
 
-#include <glad.h>
+#include <glad/glad.h>
 #include "..\utils\common.h"
 
 
