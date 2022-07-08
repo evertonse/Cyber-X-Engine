@@ -28,14 +28,13 @@ auto add(T a)
 
 
 struct T : A<T> {
-	void implementation()
-	{
+	void implementation() {
 		cout << "T implementation" << "\n";
 	}
 };
 
 int main()
 {
-	T t; 
+	T t;
 	add<T>(t);
 }
