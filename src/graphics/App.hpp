@@ -46,9 +46,9 @@ namespace cyx {
 	//	static App& instance();
 	//
 	/* static */ private: 
-		static inline App* _instance = nullptr;
+		static App* _instance;
 		static void on_internal_update(Event& e);
 	};
 
-	//App* App::_instance = nullptr;
+	App* App::_instance = nullptr;
 }

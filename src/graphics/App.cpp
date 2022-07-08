@@ -68,13 +68,11 @@ namespace cyx {
 	void App::on_event(Event& e) { return; }
 	void App::on_destroy() { return; }
 
-	auto App::screen_width() -> u32
-	{
+	auto App::screen_width() -> u32 {
 		return _window.width();
 	}
 
-	auto App::screen_height() -> u32
-	{
+	auto App::screen_height() -> u32 {
 		return _window.height();
 	}
 
