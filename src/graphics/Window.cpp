@@ -7,6 +7,7 @@ namespace cyx {
 	Window::Window(const char* title, int width, int height)
 		:_title("default_name")
 	{
+		SDL_SetMainReady();
 		std::cout << "[Window] constructor called" << '\n';
 		this->_width = width;
 		this->_height = height;

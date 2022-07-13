@@ -9,7 +9,6 @@ namespace cyx {
 	public:
 		using Event = Window::Event;
 		using Key = u8;
-		friend int ::main(int argc, char** argv);
 
 		struct Mouse {
 			bool rclick, lclick;
@@ -49,6 +48,4 @@ namespace cyx {
 		static App* _instance;
 		static void on_internal_update(Event& e);
 	};
-
-	App* App::_instance = nullptr;
 }

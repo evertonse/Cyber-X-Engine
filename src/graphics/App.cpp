@@ -1,7 +1,7 @@
-#pragma once
 #include "App.hpp"
 
 namespace cyx {
+	App* App::_instance = nullptr;
 
 	App::App(const char* name)
 		:_window(Window{name})

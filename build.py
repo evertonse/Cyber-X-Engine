@@ -1,50 +1,52 @@
 from dataclasses import dataclass
 import os
 import subprocess
-__filename__ =  __file__[__file__.rindex('\\')+1:]
+
 
 @dataclass
 class Project():
 	name = "CyberXEngine"
 	kind = "StaticLib" 	# ignored for now
 	language = "C++"  	# ignored for now
-	version = "C++17"
+	version = "c++17"
 	staticruntime = "off"
 
 
-	pchheader = "hzpch.h"
-	pchsource  = "src/hzpch.cpp"
+	pchheader = "hzpch.h" 			# ignored for now
+	pchsource  = "src/hzpch.cpp"	# ignored for now
 
-	srcfiles = {
+	srcfiles = [
 		"src/math/**",
-		"tests/test_vec.cpp",
+		"src/graphics/App.cpp",
+		"src/graphics/Window.cpp",
+		"src/graphics/Shader.cpp",
 		"vendor/glad/src/**",
-	}
+		"src/entry.cpp",
+	]
 
 	# -D
-	defines = {
+	defines = [
 		"_CRT_SECURE_NO_WARNINGS",
 		"GLFW_INCLUDE_NONE"
-	}
+	]
 	
 	# -I
-	includedirs = {
-		"src",
+	includedirs = [
 		"vendor/glad/include",
 		"vendor/SDL/include",
-	}
+	]
 
 	# -L
-	libdirs = {
-		"vendor/SDL/lib/x64",
-	}
+	libdirs = [
+		"vendor/SDL/lib/",
+	]
 
 	# -l
-	libfiles = {
-		"mingw32",
-		"SDL2main.lib",
-		"SDL2.lib",
-	}
+	libfiles = [
+		"SDL2main",
+		"SDL2",
+		#"mingw32",
+	]
 	#-O
 	optimize = "on"
 	
@@ -58,11 +60,22 @@ class Project():
 				srcdir = srcfile[:len(srcfile)-2]
 				for file in os.listdir(srcdir):
 					if file.endswith(".cpp") or file.endswith(".c"):
-						self.srcfiles.add(os.path.join(srcdir, file))
+						self.srcfiles.append(os.path.join(srcdir, file))
 				
 				self.srcfiles.remove(srcfile)
 
 
+
+# cdir = os.getcwd() # it will return current working directory
+# print("Previous_dir",cdir)
+
+# # Previous_dir C:\Users\..\Desktop\python
+# os.chdir('./..') #chdir used for change direcotry
+# print("Current_dir",cdir)
+
+import sys
+
+__filename__ =  __file__[__file__.rindex('\\')+1:]
 
 class bcolors:
 	HEADER 	 = '\033[95m'
@@ -98,10 +111,8 @@ def create_cmd(
 	cmd = f'{compiler} -std={version}'
 
 	for file in project.srcfiles:
-		cmd += f' {file} '
-
-	for warning in warnings:
-		cmd += f' -W{warning} '
+		cmd += f' ./{file} '
+		
  
 	for folder in project.includedirs:
 		cmd += f' -I{folder} '
@@ -109,16 +120,20 @@ def create_cmd(
 	for folder in project.libdirs:
 		cmd += f' -L{folder} '
 
-	for file in project.libfiles:
-		cmd += f' -l{file} '
-
+	for warning in warnings:
+		cmd += f' -W{warning} '
+	
 	for define in project.defines:
 		cmd += f' -D{define} '
-		
-	cmd = cmd + ("-O3 " if optimized else "-O0 ")
 
-	cmd += f'-o{project.name}'
+	for file in project.libfiles:
+		cmd += f' -l{file} '
+		
 	
+	cmd += (" -O3 " if optimized else "-O0 ")
+	
+	cmd += f'-o{project.name}'
+
 	return cmd
 
 def __main__():
@@ -134,13 +149,13 @@ def __main__():
 		project =project
 	)
 	
-	debug(cmd)
 	code = subprocess.run(cmd)
+	debug(f"\n\nCommand Generated: {cmd}\n\n")
 	if code.returncode == 0:
-		debug(f'[INFO]: {GREEN("Compiled")} return code was zero, usually means success')
+		debug(f'[INFO]: {GREEN("Compilation Succeded")} return code was zero, usually means success')
 		subprocess.run(project.name)
 	else:
-		debug(f'[ERROR]: return code was {RED("non-zero")}, usually means bad things')
+		debug(f'[ERROR]: {RED("Compilation Failed")} return code was {RED("non-zero")}, usually means bad things')
 
 if __name__ == '__main__':
 	__main__()

@@ -59,7 +59,7 @@ namespace cyx {
 		auto uniform_float(const char* var, f32 value) -> void;
 		
 		template<u32 dimension>
-		auto uniform_int(const char* var, f32 values[dimension]) -> void
+		auto uniform_int(const char* var, i32 values[dimension]) -> void
 		{
 			i32 location;
 			if (dimension == 1) {

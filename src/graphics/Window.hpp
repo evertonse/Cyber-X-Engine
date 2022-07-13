@@ -1,9 +1,9 @@
 #pragma once
-
 #include <iostream>
 #include <list>
 #include <functional>
 
+#define SDL_MAIN_HANDLED
 #include <SDL.h>
 
 #include <glad/glad.h>
@@ -43,8 +43,9 @@ namespace cyx {
 		
 		auto swap_buffer() -> void;
 
-		auto window_handle() ->	SDL_Window*;
-		auto context_handle()->	SDL_GLContext*;
+		auto window_handle () -> SDL_Window*;
+		auto context_handle() -> SDL_GLContext*;
+		
 		auto poll_events() -> void;
 
 	private:
