@@ -1,0 +1,81 @@
+
+name = "test_insta"
+#kind = "StaticLib" 	# ignored for now
+
+compiler 	= "g++"		# can optionally use full path
+version 	= "c++17"
+
+#staticruntime = "off"
+
+
+#pchheader 	= "hzpch.h" 		# ignored for now
+#pchsource  = "src/hzpch.cpp"	# ignored for now
+
+#he traditional behavior of linkers is to search for external functions from left to right in the libraries specified on the command line.
+# This means that a library containing the definition of a function should appear after any source files or object files which use it. 
+# This includes libraries specified with the short-cut -l option, as shown in the following command:
+#$ gcc -Wall calc.c -lm -o calc   (correct order)
+#With some linkers the opposite ordering (placing the -lm option before the file which uses it) would result in an error,
+#$ cc -Wall -lm calc.c -o calc    (incorrect order)
+#main.o: In function `main':
+#main.o(.text+0xf): undefined reference to `sqrt'
+srcfiles = [
+	"src/entry.cpp",
+	"src/graphics/application.cpp",
+	"src/graphics/gui.cpp",
+	"src/graphics/window.cpp",
+	"src/graphics/texture.cpp",
+	"src/graphics/vertex.cpp",
+	"src/graphics/shader.cpp",
+	"src/graphics/rendering.cpp",
+######## ->LIBS LAST<- ########
+	"vendor/glad/src/**",
+	"vendor/STB_IMAGE/src/**",
+	#"src/math/**",
+]
+
+binpath = "build/bin"
+
+# -D
+defines = [
+	"_CRT_SECURE_NO_WARNINGS",
+	"GLFW_INCLUDE_NONE",
+	"NUMCPP_NO_USE_BOOST"
+]
+
+# -I
+includedirs = [
+	"vendor/glad/include",
+	
+	"vendor/SDL/include",
+
+	"vendor/STB_IMAGE/include",
+
+	"vendor/Fastor/",
+	"vendor/Fastor/Fastor",
+
+	"vendor/NumCpp/include/",
+
+	"vendor/Nuklear",
+	"vendor/Nuklear/demo/common",
+]
+
+# -L
+libdirs = [
+	"vendor/SDL/lib",
+]
+
+# -l
+libfiles = [
+	"SDL2main",
+	"SDL2",
+	#"opengl32",
+	"m"
+]
+#-O
+optimize = "off"
+#-W
+warnings = [
+	'no-narrowing'
+	#'all'
+]
