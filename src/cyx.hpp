@@ -1,16 +1,15 @@
+#pragma once
 #include <vector>
 #include <unordered_map>
 #include <cstdint>
 
-#define persistent static
+#include "utils/common.h"
+#include "math/utils.hpp"
 
+#include "graphics/texture.hpp"
+#include "graphics/rendering.hpp"
 
-//#include "graphics/Renderer.hpp"
-//#include "graphics/Texture.hpp"
-#include "graphics/Window.hpp"
-#include "graphics/Shader.hpp"
-
-#include "graphics/App.hpp"
+#include "graphics/application.hpp"
 
 //#include "ecs/ecs.hpp"
-//#include "utils/common.h"
+

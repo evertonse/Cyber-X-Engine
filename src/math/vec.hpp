@@ -1,3 +1,4 @@
+#pragma once
 #include "..\utils\common.h"
 #include <array>
 #include <sstream>
@@ -6,6 +7,7 @@
 #include <cmath>
 
 namespace cyx {
+	using narray = int;
 
 	template <class T, u32 DIM>
 	struct vec {

@@ -4,9 +4,12 @@
 #include <stdlib.h>
 #include <stdio.h>  
 #include <assert.h>  
-#include <iostream>  
 
-//I saw this typing in rust and casey's stream, i really like it
+#include <string>  
+#include <iostream>  
+#include <sstream>  
+
+// I saw this typing in rust and casey's stream, i really like it
 typedef float	  f32;
 typedef double   f64;
 
@@ -30,11 +33,10 @@ typedef int8_t   i8;
 #define WARNING	"\033[93m"
 #define FAIL 		"\033[91m"
 #define ENDC 		"\033[0m"
-#define BOLD 		"\033[1m"
+#define PRINTBOLD 		"\033[1m"
 #define UNDERLINE "\033[4m"
 
 #define RED(msg) 	FAIL 	msg ENDC
 #define GREEN(msg)	OKGREEN msg ENDC
 
 // To be used when inside function and the data "persists" trough multiple calls (makes it ease to find later)
-#define persistent static
