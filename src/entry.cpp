@@ -3,7 +3,6 @@
 #include <iostream>
 #include <array>
 #include <cmath>
-
 #include "Fastor.h"
 
 #define NUMCPP_NO_USE_BOOST // we don't need to define this, because we already include this definition in the build. But intelisense is confused so....
@@ -22,6 +21,11 @@ class MyApp : public App {
 	f32 translatey = 0.0f;
 
 public:
+	nc::NdArray<f32> quad;
+	f32  angle = 30.0f;
+	f32  translateby = 0.008f;
+	f32  scaleby = 1.1f;
+
 	f32 width  = (f32)1080;
 	f32 height = (f32)720;
 	Renderer renderer;
@@ -48,11 +52,13 @@ public:
 		{}
 
 	auto on_create() -> void override   {
+
 		on_create_insta_logo();
 	}
 
 	auto on_update(f64 dt) -> void override {
-
+		
+		
 		on_update_nukklear_integration(dt);
 
 	}
@@ -63,20 +69,36 @@ public:
 		va.bind();
 		vi.bind();
 		vb.bind();
+
+				
+		std::vector<f32> model = {
+			// x     y                            
+			quad(0,0),  quad(0,1),  0.0f, 0.0f, // bottom left
+			quad(1,0), 	quad(1,1),  0.0f, 1.0f,
+			quad(2,0),  quad(2,1),  1.0f, 1.0f, // top right
+			quad(3,0), 	quad(3,1),  1.0f, 0.0f  //
+		};
+		
+		glLogCall(
+			vb.bind();
+		);
+
+		glLogCall(
+			vb.set_data(model.data(), model.size() * sizeof(f32))
+		);
+
 		texture.bind(texture_slot);
 		shader.bind();
 		
-		glLogCall(
-			glEnable(GL_TEXTURE_2D)
-		);
-		//glDisable(GL_TEXTURE_2D)
-		glLogCall(
-			glEnable(GL_BLEND)
-		);
-			
+		// enabling what Nukklear has disableit
+		glLogCall(glEnable(GL_TEXTURE_2D));
+		// enabling what Nukklear has disableit
+		glLogCall(glEnable(GL_BLEND));
+		// enabling what Nukklear has disableit
+		glLogCall(glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA));
+
 		std::cout << "[Renderer]" << "sucessfully enable blending\n";
 
-		glLogCall(glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA));
 		
 		renderer.set_clear_color(100,255,255,140); // 
 		window().set_height(height);
@@ -131,7 +153,7 @@ public:
 			0, 
 			1
 		}.transpose();
-
+	
 		std::cout << "[MyApp] created program" << "\n";
 		std::cout << "[MyApp] v\n" << v << "\n";
 		std::cout << "[MyApp] v.shape\n" << v.shape() << "\n";
@@ -145,15 +167,20 @@ public:
 
 		shader.uniform_int1("u_texture", slot);
 		shader.uniform_mat4("u_MVP", proj.data());
-
 		
-		std::vector<f32> full_screen_vertices_texture_model_coord = {
+		quad = nc::NdArray<f32>{
+				{0.0f,0.0f},
+				{width,0.0f},
+				{width,height},
+				{0.0f,height},
+		};
+		
+		std::vector<f32> model_with_texture_data = {
 			// x     y                            
-			0.f ,    0.f,   0.0f, 0.0f, // bottom left
-			width, 	 0.f,  0.0f, 1.0f,
-			width,  height,  1.0f, 1.0f, // top right
-			
-			0.f  , 	height,  1.0f, 0.0f  //
+			quad(0,0),  quad(0,1),  0.0f, 0.0f, // bottom left
+			quad(1,0), 	quad(1,1),  0.0f, 1.0f,
+			quad(2,0),  quad(2,1),  1.0f, 1.0f, // top right
+			quad(3,0), 	quad(3,1),  1.0f, 0.0f  //
 		};
 
 		std::vector<f32> vertices_texture = {
@@ -171,7 +198,7 @@ public:
 			//0,3,1
 		};
 
-		auto& model = full_screen_vertices_texture_model_coord;
+		auto& model = model_with_texture_data;
 
 		glLogCall(
 			vb.bind();
@@ -272,38 +299,55 @@ public:
 	}   
 	
 	auto on_event(Event& e ) -> void override { 
+		auto&& rot = rotation2D(angle);
+		auto&& scale = scale2D(scaleby);
+
 		auto&& buttons = this->keys();
+		
 		if (buttons[SDL_SCANCODE_W]) {
-				translatey += 0.008f;
+			quad = nc::matmul(quad,rot);
 		}
 		
 		if (buttons[SDL_SCANCODE_S]) {
-				translatey -= 0.008f;
+			quad = nc::matmul(quad,rot.transpose());
 		}
 
 		if (buttons[SDL_SCANCODE_D]) {
-				translatex += 0.008f;
+			translatex += translateby;
 		}
 
 		if (buttons[SDL_SCANCODE_A]) {
-				translatex -= 0.008f;
+			translatey += translateby;
 		}
 
 		if (e.type == SDL_MOUSEWHEEL) {
 				if (e.wheel.y > 0) {
-					scale += 0.1f;
+					std::cout << "there we go we're about to scale\n quad before" <<quad ;
+					quad = nc::matmul(quad,scale);
+					std::cout << "quad after scale" <<quad ;
 				}
 				if (e.wheel.y < 0) {
-					scale -= 0.1f;
+					quad = nc::matmul(quad,scale);
 				}
 
 		}
 	}
 };
 
+/*/////////////////////////////////////////////////////////////|
+																															 |
+	WARNING: 																										 |
+	  remove define VISUAL_STUDIO_DEBUG bellow, if you're not me |
+																															 |
+*//////////////////////////////////////////////////////////////|
+#define VISUAL_STUDIO_DEBUG
 int main(int argc, char* argv[]) {
+
+#ifdef VISUAL_STUDIO_DEBUG
+	change_working_directory("D:\\code\\Cyber-X-Engine");
+#endif
+	//exit(1);
 	MyApp a;
 	a.start("Cyber X");
-
 	return 0;
 }

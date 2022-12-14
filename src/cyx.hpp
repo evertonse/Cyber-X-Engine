@@ -4,6 +4,7 @@
 #include <cstdint>
 
 #include "utils/common.h"
+#include "utils/filesytemutil.hpp"
 #include "math/utils.hpp"
 
 #include "graphics/texture.hpp"

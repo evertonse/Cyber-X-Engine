@@ -1,0 +1,12 @@
+
+rem The supplied answers didn't work for me.
+rem I had an empty repo on GitHub with only the LICENSE file and a single commit locally. What worked was:
+
+git fetch
+git merge --allow-unrelated-histories
+git branch --set-upstream-to origin/master
+
+rem By default, the git rm command deletes files both from the Git repository as well as the filesystem. 
+rem Using the --cached flag, the actual file on disk will not be deleted.
+rem -r will recursevily look for all files in those .gitigore
+git rm -r --cached
