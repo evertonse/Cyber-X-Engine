@@ -1,0 +1,52 @@
+
+name = "test_numcpp"
+compiler = "g++"		# can optionally use full path
+version = ""
+#-O
+optimize = "off"
+
+binpath = "build/test/bin"
+
+srcfiles = [
+	"tests/test_numcpp.cpp",
+######## ->LIBS LAST<- ########
+	#"vendor/glad-compatibility/src/**",
+	"vendor/glad/src/**",
+]
+
+# -D
+defines = [
+	"_CRT_SECURE_NO_WARNINGS",
+]
+
+# -I
+includedirs = [
+	#"vendor/glad-compatibility/include",
+	"tests",
+	"vendor/glad/include",
+	"vendor/SDL/include",
+	"vendor/STB_IMAGE/include",
+	"vendor/Fastor/",
+	"vendor/Fastor/Fastor",
+	"vendor/NumCpp/include/",
+]
+
+# -L
+libdirs = [
+	"vendor/SDL/lib",
+]
+
+# -l
+libfiles = [
+	#"mingw32",
+	"SDL2main",
+	"SDL2",
+	"opengl32",
+	"m"
+]
+
+# -W
+warnings = [
+	'no-narrowing'
+	#'all'
+]

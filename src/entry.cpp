@@ -10,26 +10,27 @@
 
 //#undef NUMCPP_USE_MULTITHREAD // enables STL parallel execution policies throughout the library. Using multi-threaded algorithms can have negative performace impact for "small" array operations and should usually only be used when dealing with large array operations.
 
+static void scratchpad(struct nk_context *ctx, struct media *media) {
 
+}
 using namespace cyx;
 using namespace Fastor;
 
 class MyApp : public App {
 	
-	f32 scale = 1.0f;
-	f32 translatex = 0.0f;
-	f32 translatey = 0.0f;
-
 public:
+//>> QUAD
+	f32  angle = 0.02f;
+	f32  translateby = 2.8f;
+	f32  scaleby = 1.09f;
 	nc::NdArray<f32> quad;
-	f32  angle = 30.0f;
-	f32  translateby = 0.008f;
-	f32  scaleby = 1.1f;
+//<< QUAD
 
-	f32 width  = (f32)1080;
-	f32 height = (f32)720;
+	f32 window_width  = (f32)1080;
+	f32 window_height = (f32)720;
+	struct nk_colorf bg_color{0};
+
 	Renderer renderer;
-	
 	VertexBuffer vb;
 	VertexArray  va;
 	VertexIndex  vi;
@@ -57,14 +58,34 @@ public:
 	}
 
 	auto on_update(f64 dt) -> void override {
-		
-		
 		on_update_nukklear_integration(dt);
 
 	}
 
 	auto on_update_nukklear_integration(f64 dt) -> void   {
-		renderer.clear();
+		u8 R = u8(bg_color.r * 255.0f),
+			 G = u8(bg_color.g * 255.0f),
+			 B = u8(bg_color.b * 255.0f),
+			 A = u8(bg_color.a * 255.0f);
+		
+		printf(
+			"bd_color : %d:%d:%d:%d \n",
+			bg_color.r,
+			bg_color.g,
+			bg_color.b,
+			bg_color.a
+		);
+		printf(
+			"multiplied color from printf%d:%d:%d:%d  \n"
+			,R,G,B,A
+		);
+		
+		std::cout << R<<':'<<G<<':'<<B<<':'<<A << std::endl;
+		//renderer.set_clear_color(R,G,B,A ); // 
+		
+		renderer.clear(R,G,B,A);
+	
+		bg_color = gui().color_picker();
 
 		va.bind();
 		vi.bind();
@@ -91,7 +112,7 @@ public:
 		shader.bind();
 		
 		// enabling what Nukklear has disableit
-		glLogCall(glEnable(GL_TEXTURE_2D));
+		//glLogCall(glEnable(GL_TEXTURE_2D));
 		// enabling what Nukklear has disableit
 		glLogCall(glEnable(GL_BLEND));
 		// enabling what Nukklear has disableit
@@ -99,10 +120,10 @@ public:
 
 		std::cout << "[Renderer]" << "sucessfully enable blending\n";
 
-		
-		renderer.set_clear_color(100,255,255,140); // 
-		window().set_height(height);
-		window().set_width(width);
+
+
+		window().set_height(window_height);
+		window().set_width(window_width);
 		
 		renderer.set_viewport(0,0, screen_width(), screen_height());
 		renderer.draw(va,vi,shader);
@@ -134,26 +155,19 @@ public:
 		va.bind();
 
 
-		window().set_height(height);
-		window().set_width(width);
+		window().set_height(window_height);
+		window().set_width(window_width);
 		renderer.set_viewport(0,0, screen_width(), screen_height());
 
-		auto&& proj = cyx::ortho(0.0f,width,0.0f, height,-1.0f,1.0f).transpose();
+		auto&& proj = cyx::ortho(0.0f,window_width,0.0f, window_height,-1.0f,1.0f).transpose();
 		
 		auto&& v = nc::NdArray<f32>{
-			width/2, 
-			height/2, 
+			window_height/2, 
+			window_height/2, 
 			0, 
 			1
 		}.transpose();
 		
-		auto&& v2 = nc::NdArray<f32>{
-			width  / 2, 
-			height / 2, 
-			0, 
-			1
-		}.transpose();
-	
 		std::cout << "[MyApp] created program" << "\n";
 		std::cout << "[MyApp] v\n" << v << "\n";
 		std::cout << "[MyApp] v.shape\n" << v.shape() << "\n";
@@ -170,9 +184,9 @@ public:
 		
 		quad = nc::NdArray<f32>{
 				{0.0f,0.0f},
-				{width,0.0f},
-				{width,height},
-				{0.0f,height},
+				{window_height,0.0f},
+				{window_height,window_height},
+				{0.0f,window_height},
 		};
 		
 		std::vector<f32> model_with_texture_data = {
@@ -265,9 +279,9 @@ public:
 		angle += .002f;
 		
 		// positions
-		f32 x1 = -0.3f*scale + translatex,   y1 = -0.3f*scale + translatey;
-		f32 x2 =  0.3f*scale + translatex,   y2 = -0.3f*scale + translatey;
-		f32 x3 = -0.0f*scale + translatex,   y3 =  0.3f*scale + translatey;
+		f32 x1 = -0.3f*scaleby + translateby,   y1 = -0.3f*scaleby + translateby;
+		f32 x2 =  0.3f*scaleby + translateby,   y2 = -0.3f*scaleby + translateby;
+		f32 x3 = -0.0f*scaleby + translateby,   y3 =  0.3f*scaleby + translateby;
 		
 		// colors
 		static f32 color1 = static_cast<f32>( (rand() % 255)) / 255.0f;
@@ -300,36 +314,71 @@ public:
 	
 	auto on_event(Event& e ) -> void override { 
 		auto&& rot = rotation2D(angle);
-		auto&& scale = scale2D(scaleby);
 
 		auto&& buttons = this->keys();
 		
-		if (buttons[SDL_SCANCODE_W]) {
+		if (buttons[SDL_SCANCODE_Q]) {
+			auto&& offset = quad.copy() / 2.0f;
+			quad -=  offset;
 			quad = nc::matmul(quad,rot);
+			quad +=  offset;
+					
+		}
+		
+		if (buttons[SDL_SCANCODE_E]) {
+			auto&& offset = quad.copy() / 2.0f;
+			quad -=  offset;
+			quad = nc::matmul(quad,rot.transpose());
+			quad +=  offset;
+		}
+
+		if (buttons[SDL_SCANCODE_W]) {
+			quad(0,1) += translateby;
+			quad(1,1) += translateby;
+			quad(2,1) += translateby;
+			quad(3,1) += translateby;
 		}
 		
 		if (buttons[SDL_SCANCODE_S]) {
-			quad = nc::matmul(quad,rot.transpose());
+			quad(0,1) -= translateby;
+			quad(1,1) -= translateby;
+			quad(2,1) -= translateby;
+			quad(3,1) -= translateby;
 		}
 
 		if (buttons[SDL_SCANCODE_D]) {
-			translatex += translateby;
+			quad(0,0) += translateby;
+			quad(1,0) += translateby;
+			quad(2,0) += translateby;
+			quad(3,0) += translateby;
 		}
 
 		if (buttons[SDL_SCANCODE_A]) {
-			translatey += translateby;
+			quad(0,0) -= translateby;
+			quad(1,0) -= translateby;
+			quad(2,0) -= translateby;
+			quad(3,0) -= translateby;
+		}
+		
+		if (buttons[SDL_SCANCODE_RETURN]) {
+			std::cin.ignore();
 		}
 
 		if (e.type == SDL_MOUSEWHEEL) {
 				if (e.wheel.y > 0) {
+					auto&& scale = scale2D(scaleby);
+					
 					std::cout << "there we go we're about to scale\n quad before" <<quad ;
 					quad = nc::matmul(quad,scale);
 					std::cout << "quad after scale" <<quad ;
+					
+					//std::cin.ignore();
 				}
 				if (e.wheel.y < 0) {
+					auto&& scale = scale2D(1.0f/scaleby);
 					quad = nc::matmul(quad,scale);
+					//std::cin.ignore();
 				}
-
 		}
 	}
 };

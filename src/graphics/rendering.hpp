@@ -37,8 +37,9 @@ namespace cyx {
 	public:
 		Renderer();
 		~Renderer();
-		
+
 		void clear(void);
+		auto enable_blending() -> void;
 		void clear(u8 r, u8 g, u8 b, u8 a);
 		void set_clear_color(u8 r, u8 g, u8 b, u8 a);
 		auto set_viewport(u32 x, u32 y, u32 width, u32 height)  -> void;

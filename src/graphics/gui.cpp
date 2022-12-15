@@ -81,17 +81,17 @@ namespace cyx {
 			#ifdef INCLUDE_NODE_EDITOR
 				node_editor(ctx);
 			#endif
-			/* ----------------------------------------- */
-			/* Draw */
-			/* IMPORTANT: `nk_sdl_render` modifies some global OpenGL state
-				* with blending, scissor, face culling, depth test and viewport and
-				* defaults everything back into a default state.
-				* Make sure to either a.) save and restore or b.) reset your own state after
-				* rendering the UI. */
 
 	}
 
 	auto GUI::render() -> void {
+	/* ----------------------------------------- */
+	/* Draw */
+	/* IMPORTANT: `nk_sdl_render` modifies some global OpenGL state
+		* with blending, scissor, face culling, depth test and viewport and
+		* defaults everything back into a default state.
+		* Make sure to either a.) save and restore or b.) reset your own state after
+		* rendering the UI. */
 		nk_sdl_render(NK_ANTI_ALIASING_ON, MAX_VERTEX_MEMORY, MAX_ELEMENT_MEMORY);
 	}
 
@@ -146,6 +146,23 @@ auto cyx::GUI::on_event(SDL_Event& e) -> void {
 		nk_input_end(ctx);
 	}
 
+	auto GUI::color_picker() -> struct nk_colorf {	
+		static struct nk_colorf my_color = {0.8f, 0.3f, 0.2f, 1.0f};
+		static const char my_text[] = "I'm the background color";
+		auto&& flags = NK_WINDOW_TITLE | NK_WINDOW_MOVABLE ;
+		nk_begin(ctx, "Color Picker", nk_rect(50,50, 255, 340),flags);
+			nk_layout_row_dynamic(ctx, 200, 1);
+			my_color = nk_color_picker(ctx, my_color, NK_RGBA);           /// Our color picker, returns the newly selected color which we can then use elsewhere
+			nk_layout_row_dynamic(ctx, 20, 1);
+			nk_text_colored(ctx, my_text, strlen(my_text), NK_TEXT_LEFT, nk_rgb_cf(my_color));   /// nk_text_colored takes an rgb color instead of rgba so we have to do some magic (nk_rgb_cf)
+		nk_end(ctx);
+		std::cout <<"[GUI] color: "
+		  << " R: " << my_color.r 
+			<< " G: " << my_color.g
+		  << " B: " << my_color.b 
+			<< " A: " << my_color.a;
+		return my_color;
+	}
 
 }
 

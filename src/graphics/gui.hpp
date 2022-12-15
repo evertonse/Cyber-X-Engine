@@ -1,6 +1,7 @@
 #pragma once
 /* nuklear - 1.32.0 - public domain */
 #include <stdio.h>
+#include <iostream>
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdarg.h>
@@ -68,8 +69,10 @@ namespace cyx {
 		auto begin_event() -> void;
 		static auto on_event(SDL_Event& e)-> void;
 		auto end_event() -> void;
-	
-	static auto cleanup() -> int;
+
+		auto color_picker() -> struct nk_colorf;
+
+		static auto cleanup() -> int;
 	
 	public:
 		SDL_Window *win;
