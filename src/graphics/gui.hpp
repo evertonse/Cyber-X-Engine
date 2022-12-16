@@ -72,6 +72,8 @@ namespace cyx {
 
 		auto color_picker() -> struct nk_colorf;
 
+		auto slider(float max) -> float;
+
 		static auto cleanup() -> int;
 	
 	public:

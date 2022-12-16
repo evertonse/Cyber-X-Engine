@@ -163,6 +163,21 @@ auto cyx::GUI::on_event(SDL_Event& e) -> void {
 			<< " A: " << my_color.a;
 		return my_color;
 	}
+	
+	auto GUI::slider(float max) -> float {	
+		static float val = 0.0f;
+		auto text = "Change translation value of Logo here";
+		auto&& flags = NK_WINDOW_TITLE | NK_WINDOW_MOVABLE ;
+		nk_begin(ctx, "Slider", nk_rect(50,50, 150, 150),flags);
+			nk_layout_row_dynamic(ctx, 10, 1);
+			nk_slider_float( ctx,0.0f, &val, max, 0.3f);           /// Our color picker, returns the newly selected color which we can then use elsewhere
+			nk_layout_row_dynamic(ctx, 10, 1);
+			nk_text_colored(ctx, text, strlen(text), NK_TEXT_LEFT, nk_rgb_cf({255}));   /// nk_text_colored takes an rgb color instead of rgba so we have to do some magic (nk_rgb_cf)
+		nk_end(ctx);
+		std::cout <<"[GUI] sldier: val: "
+		  << val << std::endl;
+		return val;
+	}
 
 }
 

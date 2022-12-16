@@ -10,9 +10,7 @@
 
 //#undef NUMCPP_USE_MULTITHREAD // enables STL parallel execution policies throughout the library. Using multi-threaded algorithms can have negative performace impact for "small" array operations and should usually only be used when dealing with large array operations.
 
-static void scratchpad(struct nk_context *ctx, struct media *media) {
 
-}
 using namespace cyx;
 using namespace Fastor;
 
@@ -43,6 +41,7 @@ public:
 	Shader shader;
 	Texture texture;
 	u32 texture_slot = 0;
+	f32 slider_value = 0.0f;
 
 	int index = 0;
 
@@ -86,6 +85,9 @@ public:
 		renderer.clear(R,G,B,A);
 	
 		bg_color = gui().color_picker();
+		slider_value = gui().slider(200.f);
+		
+		translateby = slider_value;
 
 		va.bind();
 		vi.bind();

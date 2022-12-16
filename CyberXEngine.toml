@@ -58,7 +58,7 @@ includedirs = [
 
 	"vendor/Nuklear",
 	"vendor/Nuklear/demo/common",
-]
+]	
 
 # -L
 libdirs = [
@@ -73,7 +73,7 @@ libfiles = [
 	"m"
 ]
 #-O
-optimize = "off"
+optimize = 'on'
 #-W
 warnings = [
 	'no-narrowing'
