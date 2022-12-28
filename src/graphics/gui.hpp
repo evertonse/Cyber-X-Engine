@@ -10,7 +10,7 @@
 #include <assert.h>
 #include <limits.h>
 #include <time.h>
-
+#include "common.h"
 #include "nuklear_settings.h"
 #include "nuklear.h"
 #include "nuklear_sdl_gl3.h"
@@ -70,7 +70,7 @@ namespace cyx {
 		static auto on_event(SDL_Event& e)-> void;
 		auto end_event() -> void;
 
-		auto color_picker() -> struct nk_colorf;
+		auto color_picker() -> u32; 
 
 		auto slider(float max) -> float;
 

@@ -1,6 +1,5 @@
 #pragma once
 #include "..\utils\common.h"
-#include "..\math\vec.hpp"
 #include "window.hpp"
 #include "vertex.hpp"
 #include "shader.hpp"

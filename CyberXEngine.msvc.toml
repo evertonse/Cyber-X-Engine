@@ -2,7 +2,7 @@
 name = "CyberXEngine"
 #kind = "StaticLib" 	# ignored for now
 
-compiler 	= "g++"		# can optionally use full path
+compiler 	= "cl"		# can optionally use full path
 version 	= "c++17"
 
 #staticruntime = "off"
@@ -45,7 +45,7 @@ defines = [
 
 # -I
 includedirs = [
-	"src/utils",
+  "src/utils",
 
 	"vendor/glad/include",
 	
@@ -72,14 +72,14 @@ libfiles = [
 	"SDL2main",
 	"SDL2",
 	#"opengl32",
-	"m"
 ]
+
 #-O
-optimize = 'on'
+optimize = 'off'
+
 #-W
 warnings = [
-	'no-narrowing'
-	#'all'
+  '0'	
 ]
 
 ### About to add submoduling stuff -- need to

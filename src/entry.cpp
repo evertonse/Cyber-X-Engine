@@ -9,13 +9,19 @@
 #include "NumCpp.hpp"
 
 //#undef NUMCPP_USE_MULTITHREAD // enables STL parallel execution policies throughout the library. Using multi-threaded algorithms can have negative performace impact for "small" array operations and should usually only be used when dealing with large array operations.
-
+#include "nuklear_settings.h"
 
 using namespace cyx;
 using namespace Fastor;
 
+struct color {
+  union {
+    u8 r,g,b,a;
+    u32 rgba;
+  };
+};
+
 class MyApp : public App {
-	
 public:
 //>> QUAD
 	f32  angle = 0.02f;
@@ -26,7 +32,7 @@ public:
 
 	f32 window_width  = (f32)1080;
 	f32 window_height = (f32)720;
-	struct nk_colorf bg_color{0};
+	color bg_color {0};
 
 	Renderer renderer;
 	VertexBuffer vb;
@@ -62,10 +68,10 @@ public:
 	}
 
 	auto on_update_nukklear_integration(f64 dt) -> void   {
-		u8 R = u8(bg_color.r * 255.0f),
-			 G = u8(bg_color.g * 255.0f),
-			 B = u8(bg_color.b * 255.0f),
-			 A = u8(bg_color.a * 255.0f);
+		u8 R = u8(bg_color.r),
+			 G = u8(bg_color.g),
+			 B = u8(bg_color.b),
+			 A = u8(bg_color.a);
 		
 		printf(
 			"bd_color : %d:%d:%d:%d \n",
@@ -84,7 +90,7 @@ public:
 		
 		renderer.clear(R,G,B,A);
 	
-		bg_color = gui().color_picker();
+		bg_color.rgba = gui().color_picker();
 		slider_value = gui().slider(200.f);
 		
 		translateby = slider_value;

@@ -1,1 +1,2 @@
-cls && gccrun.py CyberXEngine.toml
+cls && cargs.py CyberXEngine.msvc.toml
+rem cls && cargs.py CyberXEngine.toml

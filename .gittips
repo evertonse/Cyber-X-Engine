@@ -10,3 +10,8 @@ rem By default, the git rm command deletes files both from the Git repository as
 rem Using the --cached flag, the actual file on disk will not be deleted.
 rem -r will recursevily look for all files in those .gitigore
 git rm -r --cached
+
+$ git submodule add <remote_url> <destination_folder>
+
+git clone git@github.com:org/repo.git /full/path/to/folder
+# will clone "repo" to "/full/path/to/folder"

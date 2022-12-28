@@ -38,5 +38,8 @@ typedef int8_t   i8;
 
 #define RED(msg) 	FAIL 	msg ENDC
 #define GREEN(msg)	OKGREEN msg ENDC
+#define PACK_RGBA(r, g, b, a) ((u32)(r<<24|g<<16|b<<8|a))
+
+
 
 // To be used when inside function and the data "persists" trough multiple calls (makes it ease to find later)

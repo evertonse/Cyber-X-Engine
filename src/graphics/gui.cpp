@@ -26,8 +26,6 @@ namespace cyx {
 		cleanup();
 	}
 
-
-
 	auto GUI::on_update() -> void {
 			
 			/* GUI */
@@ -146,7 +144,7 @@ auto cyx::GUI::on_event(SDL_Event& e) -> void {
 		nk_input_end(ctx);
 	}
 
-	auto GUI::color_picker() -> struct nk_colorf {	
+	auto GUI::color_picker() -> u32 {	
 		static struct nk_colorf my_color = {0.8f, 0.3f, 0.2f, 1.0f};
 		static const char my_text[] = "I'm the background color";
 		auto&& flags = NK_WINDOW_TITLE | NK_WINDOW_MOVABLE ;
@@ -156,12 +154,22 @@ auto cyx::GUI::on_event(SDL_Event& e) -> void {
 			nk_layout_row_dynamic(ctx, 20, 1);
 			nk_text_colored(ctx, my_text, strlen(my_text), NK_TEXT_LEFT, nk_rgb_cf(my_color));   /// nk_text_colored takes an rgb color instead of rgba so we have to do some magic (nk_rgb_cf)
 		nk_end(ctx);
-		std::cout <<"[GUI] color: "
+		
+    std::cout <<"[GUI] color: "
 		  << " R: " << my_color.r 
 			<< " G: " << my_color.g
 		  << " B: " << my_color.b 
-			<< " A: " << my_color.a;
-		return my_color;
+			<< " A: " << my_color.a
+      << std::endl;
+  
+    auto packed_color = PACK_RGBA(
+      (u32)(my_color.r*255.f),
+      (u32)(my_color.g*255.0f),
+      (u32)(my_color.b*255.f),
+      (u32)(my_color.a*255.f));
+		
+    std::cout <<"[GUI] color: " << std::hex << packed_color << std::endl;
+		return packed_color ;
 	}
 	
 	auto GUI::slider(float max) -> float {	

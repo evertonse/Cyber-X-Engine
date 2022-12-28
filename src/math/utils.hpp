@@ -9,6 +9,7 @@
 #define NUMCPP_NO_USE_BOOST // we don't need to define this, because we already include this definition in the build. But intelisense is confused so....
 #undef NUMCPP_USE_MULTITHREAD // enables STL parallel execution policies throughout the library. Using multi-threaded algorithms can have negative performace impact for "small" array operations and should usually only be used when dealing with large array operations.
 #include "NumCpp.hpp"
+#include "Fastor.h"
 
 
 using namespace nc;
