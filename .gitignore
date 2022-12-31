@@ -14,13 +14,14 @@ CyberXEngine.exe
 *.dylib
 *.dll
 *.a
-*.exe
+*.ex
 
 # qt creator project files
 *.pro
 *.user
 
 # directories
+
 *build
 *CMakeFiles
 *Testing
