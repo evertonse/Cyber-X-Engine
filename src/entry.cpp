@@ -128,14 +128,12 @@ public:
 
 		std::cout << "[Renderer]" << "sucessfully enable blending\n";
 
-
-
 		window().set_height(window_height);
 		window().set_width(window_width);
-		
+
 		renderer.set_viewport(0,0, screen_width(), screen_height());
 		renderer.draw(va,vi,shader);
-		
+
 		va.unbind();
 		vi.unbind();
 		vb.unbind();
@@ -161,7 +159,6 @@ public:
 		shader.bind();
 		texture.bind(texture_slot);
 		va.bind();
-
 
 		window().set_height(window_height);
 		window().set_width(window_width);

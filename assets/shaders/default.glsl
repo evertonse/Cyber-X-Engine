@@ -14,8 +14,6 @@ void main() {
 	v_tex_coord = tex_coord;
 }
 
-
-
 #pragma fragment
 #version 330  core
 
