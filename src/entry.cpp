@@ -5,7 +5,7 @@
 #include <cmath>
 #include "Fastor.h"
 
-#define NUMCPP_NO_USE_BOOST // we don't need to define this, because we already include this definition in the build. But intelisense is confused so....
+//#define NUMCPP_NO_USE_BOOST  1 // we don't need to define this, because we already include this definition in the build. But intelisense is confused so....
 #include "NumCpp.hpp"
 
 //#undef NUMCPP_USE_MULTITHREAD // enables STL parallel execution policies throughout the library. Using multi-threaded algorithms can have negative performace impact for "small" array operations and should usually only be used when dealing with large array operations.
@@ -32,6 +32,7 @@ public:
 
 	f32 window_width  = (f32)1080;
 	f32 window_height = (f32)720;
+  
 	color bg_color {0};
 
 	Renderer renderer;
@@ -48,7 +49,6 @@ public:
 	Texture texture;
 	u32 texture_slot = 0;
 	f32 slider_value = 0.0f;
-
 	int index = 0;
 
 	MyApp()
@@ -58,13 +58,11 @@ public:
 		{}
 
 	auto on_create() -> void override   {
-
 		on_create_insta_logo();
 	}
 
 	auto on_update(f64 dt) -> void override {
 		on_update_nukklear_integration(dt);
-
 	}
 
 	auto on_update_nukklear_integration(f64 dt) -> void   {
@@ -72,7 +70,7 @@ public:
 			 G = u8(bg_color.g),
 			 B = u8(bg_color.b),
 			 A = u8(bg_color.a);
-		
+		int a = NULL;
 		printf(
 			"bd_color : %d:%d:%d:%d \n",
 			bg_color.r,
@@ -247,7 +245,7 @@ public:
 
 
 	auto on_update_insta_logo(f64 dt) -> void    {
-		va.bind();
+	  va.bind();
 		vb.bind();
 		vi.bind();
 		shader.bind();
@@ -396,7 +394,6 @@ public:
 *//////////////////////////////////////////////////////////////|
 #define VISUAL_STUDIO_DEBUG
 int main(int argc, char* argv[]) {
-
 #ifdef VISUAL_STUDIO_DEBUG
 	change_working_directory("D:\\code\\Cyber-X-Engine");
 #endif

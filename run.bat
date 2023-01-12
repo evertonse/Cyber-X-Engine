@@ -1,2 +1,6 @@
-cls && cargs.py CyberXEngine.msvc.toml
-rem cls && cargs.py CyberXEngine.toml
+set toml=CyberXEngine.msvc.toml
+rem set toml=CyberXEngine.toml
+
+cls
+cargs.py --clangd %toml%
+cargs.py %toml% 

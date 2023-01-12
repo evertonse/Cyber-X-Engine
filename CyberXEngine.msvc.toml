@@ -38,6 +38,7 @@ binpath = "build/bin"
 
 # -D
 defines = [
+  "NK_IMPLEMENTATION",
 	"_CRT_SECURE_NO_WARNINGS",
 	"GLFW_INCLUDE_NONE",
 	"NUMCPP_NO_USE_BOOST"

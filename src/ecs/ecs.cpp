@@ -54,8 +54,6 @@ namespace cyx {
 	inline EntityId Registry::next_component_id() { return components_type_count++;}
 	inline EntityId Registry::next_entity_id() { return (EntityId)entities.size();}
 	
-
-
 	auto Registry::valid(EntityId e) const -> bool {
 		return entities[e].id != -1;
 	}

@@ -1,5 +1,5 @@
 #pragma once
-#include "..\utils\common.h"
+#include "common.h"
 #include "window.hpp"
 #include "vertex.hpp"
 #include "shader.hpp"
