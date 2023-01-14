@@ -2,7 +2,7 @@
 [
     {
         "directory":"D:/code/Cyber-X-Engine"
-        "command" : "g++  -DNK_IMPLEMENTATION -D_CRT_SECURE_NO_WARNINGS -DGLFW_INCLUDE_NONE -DNUMCPP_NO_USE_BOOST -Isrc/utils -Ivendor/glad/include -Ivendor/SDL/include -Ivendor/STB_IMAGE/include -Ivendor/Fastor -Ivendor/Fastor/Fastor -Ivendor/NumCpp/include -Ivendor/Nuklear -Ivendor/Nuklear/demo/common -Ivendor/Nuklear/demo/sdl_opengl3"
+        "command" : "g++  -D_CRT_SECURE_NO_WARNINGS -DGLFW_INCLUDE_NONE -DNUMCPP_NO_USE_BOOST -Isrc/utils -Ivendor/glad/include -Ivendor/SDL/include -Ivendor/STB_IMAGE/include -Ivendor/Fastor -Ivendor/Fastor/Fastor -Ivendor/NumCpp/include -Ivendor/Nuklear -Ivendor/Nuklear/demo/common -Ivendor/Nuklear/demo/sdl_opengl3"
         "file": ""
     }
 ]
