@@ -5,7 +5,7 @@
 #include <cmath>
 #include "Fastor.h"
 
-//#define NUMCPP_NO_USE_BOOST  1 // we don't need to define this, because we already include this definition in the build. But intelisense is confused so....
+#define NUMCPP_NO_USE_BOOST  1 // we don't need to define this, because we already include this definition in the build. But intelisense is confused so....
 #include "NumCpp.hpp"
 
 //#undef NUMCPP_USE_MULTITHREAD // enables STL parallel execution policies throughout the library. Using multi-threaded algorithms can have negative performace impact for "small" array operations and should usually only be used when dealing with large array operations.
@@ -21,12 +21,9 @@ struct color {
   };
 };
 
-int GLOBAL_VAR = 2;
-
 class MyApp : public App {
 public:
 //>> QUAD
-  int global_var = GLOBAL_VAR ;
 	f32  angle = 0.02f;
 	f32  translateby = 2.8f;
 	f32  scaleby = 1.09f;

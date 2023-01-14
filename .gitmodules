@@ -1,0 +1,9 @@
+[submodule "vendor/Fastor"]
+	path = vendor/Fastor
+	url = https://github.com/romeric/Fastor.git
+[submodule "Nuklear"]
+	path = Nuklear
+	url = https://github.com/Immediate-Mode-UI/Nuklear.git
+[submodule "vendor/Nuklear"]
+	path = vendor/Nuklear
+	url = https://github.com/Immediate-Mode-UI/Nuklear.git

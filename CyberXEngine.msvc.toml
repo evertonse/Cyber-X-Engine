@@ -61,6 +61,7 @@ includedirs = [
 
 	"vendor/Nuklear",
 	"vendor/Nuklear/demo/common",
+  "vendor/Nuklear/demo/sdl_opengl3"
 ]	
 
 # -L
@@ -86,5 +87,4 @@ warnings = [
 ### About to add submoduling stuff -- need to
 submodules = [
 	"https://github.com/romeric/Fastor.git",
-
 ]
