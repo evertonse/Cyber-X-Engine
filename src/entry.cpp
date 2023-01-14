@@ -21,9 +21,12 @@ struct color {
   };
 };
 
+int GLOBAL_VAR = 2;
+
 class MyApp : public App {
 public:
 //>> QUAD
+  int global_var = GLOBAL_VAR ;
 	f32  angle = 0.02f;
 	f32  translateby = 2.8f;
 	f32  scaleby = 1.09f;
