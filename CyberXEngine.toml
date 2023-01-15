@@ -2,7 +2,7 @@
 name = "CyberXEngine"
 #kind = "StaticLib" 	# ignored for now
 
-compiler 	= "g++"		# can optionally use full path
+compiler 	= "cl"		# can optionally use full path
 version 	= "c++17"
 
 #staticruntime = "off"
@@ -38,6 +38,7 @@ binpath = "build/bin"
 
 # -D
 defines = [
+        #"NK_IMPLEMENTATION", # it's better defined in code
 	"_CRT_SECURE_NO_WARNINGS",
 	"GLFW_INCLUDE_NONE",
 	"NUMCPP_NO_USE_BOOST"
@@ -45,7 +46,7 @@ defines = [
 
 # -I
 includedirs = [
-	"src/utils",
+  "src/utils",
 
 	"vendor/glad/include",
 	
@@ -60,6 +61,7 @@ includedirs = [
 
 	"vendor/Nuklear",
 	"vendor/Nuklear/demo/common",
+  "vendor/Nuklear/demo/sdl_opengl3"
 ]	
 
 # -L
@@ -72,18 +74,17 @@ libfiles = [
 	"SDL2main",
 	"SDL2",
 	#"opengl32",
-	"m"
 ]
+
 #-O
-optimize = 'on'
+optimize = 'off'
+
 #-W
 warnings = [
-	'no-narrowing'
-	#'all'
+  '0'	
 ]
 
 ### About to add submoduling stuff -- need to
 submodules = [
 	"https://github.com/romeric/Fastor.git",
-
 ]

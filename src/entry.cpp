@@ -5,7 +5,7 @@
 #include <cmath>
 #include "Fastor.h"
 
-#define NUMCPP_NO_USE_BOOST  1 // we don't need to define this, because we already include this definition in the build. But intelisense is confused so....
+//#define NUMCPP_NO_USE_BOOST  1 // we don't need to define this, because we already include this definition in the build. But intelisense is confused so....
 #include "NumCpp.hpp"
 
 //#undef NUMCPP_USE_MULTITHREAD // enables STL parallel execution policies throughout the library. Using multi-threaded algorithms can have negative performace impact for "small" array operations and should usually only be used when dealing with large array operations.
@@ -16,7 +16,9 @@ using namespace Fastor;
 
 struct color {
   union {
-    u8 r,g,b,a;
+		struct {
+	    u8 r,g,b,a;
+		};
     u32 rgba;
   };
 };
@@ -86,10 +88,12 @@ public:
 		std::cout << R<<':'<<G<<':'<<B<<':'<<A << std::endl;
 		//renderer.set_clear_color(R,G,B,A ); // 
 		
-		renderer.clear(R,G,B,A);
 	
 		bg_color.rgba = gui().color_picker();
+		std::cout <<"bg_color.rgba "<< bg_color.rgba  << std::endl;
 		slider_value = gui().slider(200.f);
+		
+		renderer.clear(R,G,B,A);
 		
 		translateby = slider_value;
 
@@ -118,7 +122,7 @@ public:
 		shader.bind();
 		
 		// enabling what Nukklear has disableit
-		//glLogCall(glEnable(GL_TEXTURE_2D));
+		//glLogCall(glEnablpe(GL_TEXTURE_2D));
 		// enabling what Nukklear has disableit
 		glLogCall(glEnable(GL_BLEND));
 		// enabling what Nukklear has disableit
@@ -170,7 +174,7 @@ public:
 			0, 
 			1
 		}.transpose();
-		
+	
 		std::cout << "[MyApp] created program" << "\n";
 		std::cout << "[MyApp] v\n" << v << "\n";
 		std::cout << "[MyApp] v.shape\n" << v.shape() << "\n";

@@ -168,7 +168,7 @@ auto cyx::GUI::on_event(SDL_Event& e) -> void {
       (u32)(my_color.b*255.f),
       (u32)(my_color.a*255.f));
 		
-    std::cout <<"[GUI] color: " << std::hex << packed_color << std::endl;
+    std::cout <<"[GUI] packed color: " << std::hex << packed_color << std::endl;
 		return packed_color ;
 	}
 	
