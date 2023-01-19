@@ -1,4 +1,6 @@
 #pragma once
+#include "NumCpp/NdArray/NdArrayCore.hpp"
+#include "common.h"
 #include "cyx.hpp"
 #include <iostream>
 #include <array>
@@ -45,6 +47,7 @@ public:
 	VertexBufferLayout layout;
 
 	std::array<f32,4> color;
+	NdArray<f32>	proj;
 /*
 */
 	Shader shader;
@@ -136,12 +139,19 @@ public:
 		renderer.set_viewport(0,0, screen_width(), screen_height());
 		renderer.draw(va,vi,shader);
 
+		auto&& new_mvp= /*proj **/ translation({10,10,10});
+		NdArray<f32> pos = {1,1,1,1};
+				
+		std::cout << "pos = " << pos << pos.shape() 
+			<< " new u_mvp" << new_mvp  << new_mvp.shape()
+			<< "pos * new_mvp " << nc::matmul(pos, new_mvp)  << "\n";
+		std::cin.get();
+		
 		va.unbind();
 		vi.unbind();
 		vb.unbind();
 		texture.unbind();
-		shader.unbind();
-
+		shader.unbind(); 
 
 	//	nk_clear(_gui.ctx);
 	//	nk_buffer_clear(&_gui.ctx->memory);
@@ -166,7 +176,7 @@ public:
 		window().set_width(window_width);
 		renderer.set_viewport(0,0, screen_width(), screen_height());
 
-		auto&& proj = cyx::ortho(0.0f,window_width,0.0f, window_height,-1.0f,1.0f).transpose();
+		proj = cyx::ortho(0.0f,window_width,0.0f, window_height,-1.0f,1.0f).transpose();
 		
 		auto&& v = nc::NdArray<f32>{
 			window_height/2, 
@@ -261,6 +271,7 @@ public:
 		// because the inedx buffer is already bound we can pass null as the index buffer pointer
 		renderer.draw(va,vi,shader, texture);
 
+		
 		va.unbind();
 		vb.unbind();
 		vi.unbind();
@@ -401,7 +412,7 @@ int main(int argc, char* argv[]) {
 #ifdef VISUAL_STUDIO_DEBUG
 	change_working_directory("D:\\code\\Cyber-X-Engine");
 #endif
-	//exit(1);
+	//[xit(1);
 	MyApp a;
 	a.start("Cyber X");
 	return 0;

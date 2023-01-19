@@ -7,7 +7,7 @@
 
 #include "..\utils\common.h"
 //#include "common.h"
-#define NUMCPP_NO_USE_BOOST // we don't need to define this, because we already include this definition in the build. But intelisense is confused so....
+//#define NUMCPP_NO_USE_BOOST // we don't need to define this, because we already include this definition in the build. But intelisense is confused so....
 #undef NUMCPP_USE_MULTITHREAD // enables STL parallel execution policies throughout the library. Using multi-threaded algorithms can have negative performace impact for "small" array operations and should usually only be used when dealing with large array operations.
 #include "NumCpp.hpp"
 #include "Fastor.h"
@@ -44,15 +44,19 @@ namespace cyx {
 	}
 	// using homogenous coordiantes
 	auto translation(std::initializer_list<f32> translate) -> NdArray<f32> {
-		Shape shape (translate.size() + 1,translate.size()+1);
+		u32 n = translate.size()+1;
+		Shape shape(n, n);
 		NdArray<f32> A(shape);
-
-		A(shape.rows-1,shape.cols-1) = 1.0f;
-		
+		A.zeros();
+	
+		// create identity
+		for(u32 i = 0; i < n; i++)
+			A(i,i) = 1.0f;
+	
 		size_t i = 0;
 		for (auto& value : translate) {
-			A(i, shape.cols-1) = value;
-			i =+ 1;
+			A(i,shape.cols-1) = value;
+			i += 1;
 		}
 		return A;
 	}
